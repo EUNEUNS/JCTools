@@ -1,0 +1,12 @@
+Required libraries are as follows:
+
+commons-math3-3.3.jar
+poi-3.8-20120326.jar
+xercesImpl.jar
+guava-14.0.1.jar
+poi-scratchpad-3.8-20120326.jar	xml-apis.jar
+javacsv.jar
+weka3.7.9.jar
+
+Download these jar files from the internet.
+ant will use these libraries when building this project.
