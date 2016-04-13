@@ -54,13 +54,29 @@ import weka.filters.unsupervised.attribute.Remove;
 import weka.filters.unsupervised.attribute.Standardize;
 import weka.filters.unsupervised.instance.RemoveRange;
 
+/**
+ * This class provides useful static methods when using Weka. Please, see the list of methods.
+ * 
+ * @author JC
+ *
+ */
 public class WekaUtils {
+	/** String value of the positive label */
 	static final public String strPos = "buggy";
-	static final public String strNeg = "clean"; 
+	/** String value of the negative label */
+	static final public String strNeg = "clean";
+	/** String value of label attribute */
 	static final public String labelName = "label";
+	/** double value of the positive label */
 	static public double dblPosValue = 0;
+	/** double value of the positive label */
 	static public double dblNegValue = 1;
 
+	/**
+	 * The main method was used to directly execute some methods.
+	 * This might be a meaningless main method. Just keep this code. It could be moved to test code. 
+	 * @param args
+	 */
 	static public void main(String[] args){
 		if(args[0].equals("saveCrossValidationFold")){
 			if(args.length==6)
@@ -85,8 +101,8 @@ public class WekaUtils {
 
 	/**
 	 * Write an arff file with instances
-	 * @param instances
-	 * @param targetFileName
+	 * @param instances Instances object
+	 * @param targetFileName An arff file is saved with this parameter value
 	 */
 	static public void writeADataFile(Instances instances,String targetFileName){
 		try {
@@ -111,7 +127,7 @@ public class WekaUtils {
 
 	/**
 	 * Create a list of attributes for the given number of attributes
-	 * @param numOfAttributes
+	 * @param numOfAttributes The number of attributes to create
 	 * @return ArrayList of Attribute
 	 */
 	static public ArrayList<Attribute> createAttributeInfoForClassfication(long numOfAttributes){
@@ -137,6 +153,14 @@ public class WekaUtils {
 		return attributes;
 	}
 
+	/**
+	 * To compute prediction results by merging the results from two models.
+	 * @param predictionInfo The prediction information to print out
+	 * @param pathForPredictions1 Prediction results from the first model
+	 * @param pathForPredictions2 Prediction results from the second model
+	 * @param buggyLabel String value of buggy label
+	 * @return Measures Return measures
+	 */
 	public static Measures predictionResultsFromEnsemble(String predictionInfo,String pathForPredictions1,String pathForPredictions2,String buggyLabel){
 
 		Measures measures1 = getMeauresFromDetailedResults(pathForPredictions1);
