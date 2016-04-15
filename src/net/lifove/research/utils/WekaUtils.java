@@ -185,6 +185,12 @@ public class WekaUtils {
 		return measures;
 	}
 
+	/**
+	 * Compute prediction measures (precision/recall/f-measure) from two different predicion result files
+	 * @param pathForPredictions1 The first result file
+	 * @param pathForPredictions2 The second result file
+	 * @return Measures
+	 */
 	private static Measures getMeauresFromDetailedResults(
 			String pathForPredictions1,String pathForPredictions2) {
 
@@ -272,6 +278,11 @@ public class WekaUtils {
 		return measures;
 	}
 
+	/**
+	 * Compute measure (precision/recall/f-measure) from the predicted results (the last two columns represents the actual and predicted results, respectively.
+	 * @param pathForPredictions1 The prediction result file
+	 * @return Measures
+	 */
 	private static Measures getMeauresFromDetailedResults(
 			String pathForPredictions1) {
 
@@ -347,7 +358,7 @@ public class WekaUtils {
 		return measures;
 	}
 	
-	
+	/** String array that contains buggy labels. */
 	static String[] buggyLabels = {"buggy","TRUE"};
 	public static String getPosLabel(Instances instances) {
 		
@@ -363,6 +374,13 @@ public class WekaUtils {
 		return null;
 	}
 
+	/**
+	 * To generate R data for drawing bean plots from an arff file
+	 * @param arffPath The arff file path
+	 * @param saveTo The file destination for the generated R data
+	 * @param className Label name
+	 * @param strBuggyLabel String value of buggy label
+	 */
 	public static void generateRDataForBeanPlotsFromArff(String arffPath,String saveTo,String className,String strBuggyLabel){
 		Instances instances = loadArff(arffPath,className);
 
