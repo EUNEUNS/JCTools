@@ -12,8 +12,19 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 import com.google.common.primitives.Doubles;
 
+/**
+ * This class provides useful methods for array related variables/objects.
+ * @author JC
+ *
+ */
 public class ArrayListUtil {
 	
+	/**
+	 * To get a index from the string array of metric names with a specific metric name
+	 * @param metricName the metric name we want to know its index in the string array
+	 * @param metricNames String array that contains all metric names
+	 * @return index for metricName
+	 */
 	public static int getMetricIndex(String metricName,String[] metricNames){
 		
 		for(int i=0; i<metricNames.length;i++){
