@@ -21,6 +21,7 @@ public class ArrayListUtil {
 	
 	/**
 	 * To get a index from the string array of metric names with a specific metric name
+	 * 
 	 * @param metricName the metric name we want to know its index in the string array
 	 * @param metricNames String array that contains all metric names
 	 * @return index for metricName
@@ -35,7 +36,15 @@ public class ArrayListUtil {
 		return -1;
 	}
 	
-	public static String getLineWithBestValue(ArrayList<String> lines,int idxForLookAtValue,int idxForReturnValue, double valueNotConsidering){
+	/**
+	 * To get a line with the biggest value in a certain column.
+	 * 
+	 * @param lines all lines of ArrysString<String>
+	 * @param idxForLookAtValue
+	 * @param valueNotConsidering
+	 * @return a line with the best value in a designated column
+	 */
+	public static String getLineWithBestValue(ArrayList<String> lines,int idxForLookAtValue, double valueNotConsidering){
 		
 		double bestValueLookAt = -1.0;
 		String bestLineReturn = "";
@@ -79,6 +88,13 @@ public class ArrayListUtil {
 		return mergedArrayList;
 	}
 	
+	/**
+	 * To merge two ArrayList<String> with the same number of lines horizontally
+	 * 
+	 * @param linesOne First ArrayList<String>
+	 * @param linesTwo Second ArrayList<String>
+	 * @return
+	 */
 	static public ArrayList<String> mergeSameLengthArrayList(ArrayList<String> linesOne,ArrayList<String> linesTwo){
 		
 		if(linesOne.size()!=linesTwo.size()){
