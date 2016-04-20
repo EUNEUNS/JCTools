@@ -109,6 +109,14 @@ public class ArrayListUtil {
 		return linesOne; 
 	}
 	
+	/**
+	 * Merge two lines and remove a duplicated key
+	 * @param lineOne First line
+	 * @param lineTwo Second line
+	 * @param keyIndex Key index
+	 * @param insertingIndex The position for merge (inserting whole columns in that position)
+	 * @return mergedLine
+	 */
 	static public String mergeStringLines(String lineOne,String lineTwo,int keyIndex,int insertingIndex){
 		String mergedLine = "";
 		String[] splittingLine = lineOne.split(",");
@@ -123,6 +131,13 @@ public class ArrayListUtil {
 		return mergedLine;
 	}
 	
+	/**
+	 * Merge two lines
+	 * @param lineOne
+	 * @param lineTwo
+	 * @param insertingIndex
+	 * @return
+	 */
 	static String getMergedLine(String lineOne, String lineTwo, int insertingIndex){
 		ArrayList<String> lstLineOne = new ArrayList<String>(Arrays.asList(lineOne.split(",")));
 		ArrayList<String> lstLineTwo = new ArrayList<String>(Arrays.asList(lineTwo.split(",")));
@@ -134,6 +149,12 @@ public class ArrayListUtil {
 		return strArrayListToString(lstLineOne); 
 	}
 	
+	/**
+	 * Remove a column in the comma separated line
+	 * @param line
+	 * @param index
+	 * @return the merged string
+	 */
 	static String removeColumn(String line,int index){
 		
 		ArrayList<String> splittingLine = new ArrayList<String>(Arrays.asList(line.split(",")));
@@ -143,12 +164,22 @@ public class ArrayListUtil {
 		return strArrayListToString(splittingLine);
 	}
 	
+	/**
+	 * Remove a column in multiple lines
+	 * @param lines
+	 * @param index
+	 */
 	static void removeColumn(ArrayList<String> lines,int index){
 		for(int i=0; i<lines.size();i++){
 			lines.set(i, removeColumn(lines.get(i),index));
 		}
 	}
 	
+	/**
+	 * Convert ArrayList<String> to a String
+	 * @param lstLine
+	 * @return
+	 */
 	static String strArrayListToString(ArrayList<String> lstLine){
 		String line = "";
 		
