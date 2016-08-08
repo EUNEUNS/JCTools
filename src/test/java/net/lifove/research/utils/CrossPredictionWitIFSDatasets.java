@@ -98,14 +98,41 @@ public class CrossPredictionWitIFSDatasets {
 		batchRunner(projectGroupNASA5,projectGroupPROMISE);
 		batchRunner(projectGroupNASA5,projectGroupSOFTLAB);
 		
+		
 		batchRunner(projectGroupSOFTLAB,projectGroupAEEEM);
 		batchRunner(projectGroupSOFTLAB,projectGroupRelink);
 		batchRunner(projectGroupSOFTLAB,projectGroupPROMISE);
 		batchRunner(projectGroupSOFTLAB,projectGroupNASA);
 		batchRunner(projectGroupSOFTLAB,projectGroupNASA2);
 		batchRunner(projectGroupSOFTLAB,projectGroupNASA3);
-		batchRunner(projectGroupSOFTLAB,projectGroupNASA3);
+		batchRunner(projectGroupSOFTLAB,projectGroupNASA4);
 		batchRunner(projectGroupSOFTLAB,projectGroupNASA5);
+		
+		batchRunner(projectGroupNASA,projectGroupNASA2);
+		batchRunner(projectGroupNASA,projectGroupNASA3);
+		batchRunner(projectGroupNASA,projectGroupNASA4);
+		batchRunner(projectGroupNASA,projectGroupNASA5);
+		
+		batchRunner(projectGroupNASA2,projectGroupNASA);
+		batchRunner(projectGroupNASA2,projectGroupNASA3);
+		batchRunner(projectGroupNASA2,projectGroupNASA4);
+		batchRunner(projectGroupNASA2,projectGroupNASA5);
+		
+		batchRunner(projectGroupNASA3,projectGroupNASA);
+		batchRunner(projectGroupNASA3,projectGroupNASA2);
+		batchRunner(projectGroupNASA3,projectGroupNASA4);
+		batchRunner(projectGroupNASA3,projectGroupNASA5);
+		
+		batchRunner(projectGroupNASA4,projectGroupNASA);
+		batchRunner(projectGroupNASA4,projectGroupNASA2);
+		batchRunner(projectGroupNASA4,projectGroupNASA3);
+		batchRunner(projectGroupNASA4,projectGroupNASA5);
+		
+		batchRunner(projectGroupNASA5,projectGroupNASA);
+		batchRunner(projectGroupNASA5,projectGroupNASA2);
+		batchRunner(projectGroupNASA5,projectGroupNASA3);
+		batchRunner(projectGroupNASA5,projectGroupNASA4);
+		
 	}
 
 	private void batchRunner(ProjectGroupInfo sourceGroup,ProjectGroupInfo targetGroup) {
