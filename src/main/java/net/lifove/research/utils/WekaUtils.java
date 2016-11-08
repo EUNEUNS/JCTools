@@ -1116,6 +1116,32 @@ public class WekaUtils {
 
 		return randomizedData;
 	}
+	
+	/**
+	 * Generate new instances by random labeling
+	 * @param instances
+	 * @return new instances with randomly labeled
+	 */
+	public static Instances randomizeLabeling(Instances instances){
+
+		Instances randomlyLabeledData = new Instances(instances);
+
+		double[] lableValues = new double[instances.numInstances()];
+
+		
+		// get label values
+		for(int instIdx=0;instIdx<instances.numInstances();instIdx++){// ignore label attribute
+			lableValues[instIdx] = instances.instance(instIdx).classValue();
+		}
+
+		shuffleArray(lableValues);
+
+		for(int instIdx=0;instIdx<instances.numInstances();instIdx++){// ignore label attribute
+			randomlyLabeledData.instance(instIdx).setValue(instances.classAttribute(), lableValues[instIdx]);
+		}
+
+		return randomlyLabeledData;
+	}
 
 	public static double harmonicMean(double[] data)
 	{
