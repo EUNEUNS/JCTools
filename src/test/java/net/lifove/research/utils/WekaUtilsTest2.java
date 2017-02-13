@@ -17,11 +17,18 @@ public class WekaUtilsTest2 {
 	@Test
 	public void testMergeArffWithNewFeatures(){
 		
-		String trainOrTest = "test";
+		for(int i=3; i<8;i++){
+			AddManualFeatures("" + i, "train");
+			AddManualFeatures("" + i, "test");
+		}
 		
-		String path = System.getProperty("user.home") + "/Documents/UW/ODP/projects/lucene/Song_token/arffsManuallyFilteredWOTestCases/0/token_input/" + trainOrTest + "-fold-0-.arff";
+	}
+
+	private void AddManualFeatures(String fold, String trainOrTest) {
+		String path = System.getProperty("user.home")
+				+ "/Documents/ODP/projects/lucene/Song_token/arffsManuallyFilteredWOTestCases/" + fold + "/token_input/" + trainOrTest + "-fold-" + fold + "-.arff";
 		Instances instances = WekaUtils.loadArff(path, "buggy");
-		ArrayList<String> strNewFeatures = FileUtil.getLines(System.getProperty("user.home") + "/Documents/UW/ODP/projects/lucene/semanticFeatures.txt", true);
+		ArrayList<String> strNewFeatures = FileUtil.getLines(System.getProperty("user.home") + "/Documents/ODP/projects/lucene/semanticFeatures.txt", true);
 		
 		HashMap<String,ArrayList<Double>> featureValues = getFeatureValues(strNewFeatures);
 		
@@ -62,8 +69,7 @@ public class WekaUtilsTest2 {
             
           }
         
-       FileUtil.writeAFile(newData.toString(), System.getProperty("user.home") + "/Documents/UW/ODP/projects/lucene/Song_token/" + trainOrTest + ".arff");
-		
+       FileUtil.writeAFile(newData.toString(), System.getProperty("user.home") + "/Documents/ODP/projects/lucene/Song_token/" + trainOrTest + "_" + fold + ".arff");
 	}
 
 	private HashMap<String, ArrayList<Double>> getFeatureValues(ArrayList<String> lines) {
