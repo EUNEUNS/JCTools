@@ -810,6 +810,24 @@ public class WekaUtils {
 	}
 
 	/**
+	 * Get instances with specific attributes
+	 * @param instances
+	 * @param attributeIndices attribute string names.
+	 * @param invertSelection for invert selection
+	 * @return new instances with specific attributes
+	 */
+	static public Instances getInstancesByRemovingSpecificAttributesByStringNames(Instances instances,String attributeNames,boolean invertSelection){
+
+		String attributeIndices = "";
+		
+		for(String attributeName:attributeNames.split(",")){
+			attributeIndices += instances.attribute(attributeName).index() + ",";
+		}
+
+		return getInstancesByRemovingSpecificAttributes(instances,attributeIndices,invertSelection);
+	}
+	
+	/**
 	 * Get similar attribute indices within a project
 	 * @param instances
 	 * @return int[] contains similar attribute indices
