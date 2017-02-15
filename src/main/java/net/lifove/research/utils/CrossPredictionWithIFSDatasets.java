@@ -19,7 +19,7 @@ public class CrossPredictionWithIFSDatasets {
 		ProjectGroupInfo projectGroupAEEEM = new ProjectGroupInfo(pathRoot + "data/AEEEM/", "class", "buggy", AEEEM);
 		
 		String[] ReLink = {"Apache","Safe","Zxing"};
-		ProjectGroupInfo projectGroupRelink = new ProjectGroupInfo(pathRoot + "data/Relink/", "isDefective", "TRUE", ReLink);
+		ProjectGroupInfo projectGroupRelink = new ProjectGroupInfo(pathRoot + "data/ReLink/", "isDefective", "TRUE", ReLink);
 
 		String[] PROMISE = {"ant-1.3","arc","camel-1.0","poi-1.5","redaktor","skarbonka",
 			"tomcat","velocity-1.4","xalan-2.4","xerces-1.2"};
