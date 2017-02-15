@@ -1,21 +1,19 @@
 package net.lifove.research.utils;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-
-import net.lifove.research.utils.WekaUtils;
-
-import org.junit.Test;
-
 import weka.core.Instances;
 
-public class CrossPredictionWitIFSDatasets {
+public class CrossPredictionWithIFSDatasets {
+	
+	String mlAlg = "";
 
-	@Test
-	public void testRun() {
+	public static void main(String[] args) {
+		new CrossPredictionWithIFSDatasets().run(args);
+	}
+
+	private void run(String[] args) {
 		
-		String pathRoot = System.getProperty("user.home") + "/Documents/UW/HDP+/"; 
+		String pathRoot = args[0];
+		mlAlg = args[1];
 		
 		String[] AEEEM = {"EQ", "JDT","LC","ML","PDE"};
 		ProjectGroupInfo projectGroupAEEEM = new ProjectGroupInfo(pathRoot + "data/AEEEM/", "class", "buggy", AEEEM);
@@ -150,10 +148,23 @@ public class CrossPredictionWitIFSDatasets {
 				Instances targetInstances = WekaUtils.loadArff(targetPath, classAttributeName);
 				
 				WekaUtils.crossPredictionOnTheSameSplit(predictionInfo,
-						sourceInstances, targetInstances, posLabel, repeat, folds,"");
+						sourceInstances, targetInstances, posLabel, repeat, folds,mlAlg);
 
 			}
 		}
 	}
 }
 
+class ProjectGroupInfo{
+	String dirPath;
+	String labelName;
+	String posLabel;
+	String[] projects;
+	
+	ProjectGroupInfo(String dirPath,String labelName,String posLabel,String[] projects){
+		this.dirPath = dirPath;
+		this.labelName = labelName;
+		this.posLabel = posLabel;
+		this.projects = projects;
+	}
+}

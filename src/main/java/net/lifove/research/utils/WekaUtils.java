@@ -1366,9 +1366,9 @@ public class WekaUtils {
 	 * @param verbose
 	 */
 	public static void crossPredictionOnTheSameSplit(String predictionInfo,Instances sourceInstances,
-			Instances targetInstances,String posLabel,int repeat,int folds, boolean verbose) {
+			Instances targetInstances,String posLabel,int repeat,int folds, boolean verbose,String mlAlg) {
 
-		String mlAlgorithm = "weka.classifiers.functions.Logistic";
+		String mlAlgorithm = mlAlg.isEmpty()?"weka.classifiers.functions.Logistic":mlAlg;
 
 		try {
 			Classifier classifierForCross = (Classifier) Utils.forName(Classifier.class, mlAlgorithm, null);
@@ -1454,10 +1454,10 @@ public class WekaUtils {
 	 * @param folds
 	 */
 	public static void crossPredictionOnTheSameSplit(String predictionInfo,Instances sourceInstances,
-			Instances targetInstances,String posLabel,int repeat,int folds) {
+			Instances targetInstances,String posLabel,int repeat,int folds, String mlAlg) {
 
 		crossPredictionOnTheSameSplit(predictionInfo,sourceInstances,
-				targetInstances,posLabel,repeat,folds,true);
+				targetInstances,posLabel,repeat,folds,true,mlAlg);
 
 	}
 

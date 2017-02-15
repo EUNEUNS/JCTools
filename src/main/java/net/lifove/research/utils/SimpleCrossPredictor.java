@@ -40,7 +40,7 @@ public class SimpleCrossPredictor {
 			verbose = Boolean.parseBoolean(args[7]);
 		
 		WekaUtils.crossPredictionOnTheSameSplit(predictionInfo,
-						sourceInstances, targetInstances, posLabel, repeat, folds, verbose);
+						sourceInstances, targetInstances, posLabel, repeat, folds, verbose,"");
 	}
 	
 	public static Measure crossPrediction(Instances srcInstances, Instances tgtInstances, String mlAlgorithm, String posStrLabel){
