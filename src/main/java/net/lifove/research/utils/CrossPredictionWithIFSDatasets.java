@@ -205,7 +205,7 @@ class BatchRunner implements Runnable{
 				int repeat = 500;
 				int folds = 2;
 				
-				if((!existingIFSPreidctions.containsKey(predictionInfo) && existingIFSPreidctions.get(predictionInfo).size()!=((repeat*folds)+1))){
+				if((!existingIFSPreidctions.containsKey(predictionInfo) || existingIFSPreidctions.get(predictionInfo).size()!=((repeat*folds)+1))){
 				
 					Instances sourceInstances = WekaUtils.loadArff(sourcePath, classAttributeName);
 					Instances targetInstances = WekaUtils.loadArff(targetPath, classAttributeName);
