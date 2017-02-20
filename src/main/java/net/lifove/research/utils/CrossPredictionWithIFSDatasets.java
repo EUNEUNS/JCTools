@@ -1,10 +1,15 @@
 package net.lifove.research.utils;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import weka.core.Instances;
 
 public class CrossPredictionWithIFSDatasets {
 	
 	String mlAlg = "";
+	int threadPoolSize=4;
 
 	public static void main(String[] args) {
 		new CrossPredictionWithIFSDatasets().run(args);
@@ -14,6 +19,7 @@ public class CrossPredictionWithIFSDatasets {
 		
 		String pathRoot = args[0];
 		mlAlg = args[1];
+		threadPoolSize = args[2]!=null?Integer.parseInt(args[2]):threadPoolSize;
 		
 		String[] AEEEM = {"EQ", "JDT","LC","ML","PDE"};
 		ProjectGroupInfo projectGroupAEEEM = new ProjectGroupInfo(pathRoot + "data/AEEEM/", "class", "buggy", AEEEM);
@@ -43,96 +49,120 @@ public class CrossPredictionWithIFSDatasets {
 		String[] SOFTLAB = {"ar1","ar3","ar4","ar5","ar6"};
 		ProjectGroupInfo projectGroupSOFTLAB = new ProjectGroupInfo(pathRoot + "data/SOFTLAB/", "defects", "true", SOFTLAB);
 		
+		ExecutorService executor = Executors.newFixedThreadPool(threadPoolSize);
 		
-		batchRunner(projectGroupAEEEM,projectGroupRelink);
-		batchRunner(projectGroupAEEEM,projectGroupPROMISE);
-		batchRunner(projectGroupAEEEM,projectGroupNASA);
-		batchRunner(projectGroupAEEEM,projectGroupNASA2);
-		batchRunner(projectGroupAEEEM,projectGroupNASA3);
-		batchRunner(projectGroupAEEEM,projectGroupNASA4);
-		batchRunner(projectGroupAEEEM,projectGroupNASA5);
-		batchRunner(projectGroupAEEEM,projectGroupSOFTLAB);
+		executor.execute(new BatchRunner(projectGroupAEEEM,projectGroupRelink,mlAlg));
+		executor.execute(new BatchRunner(projectGroupAEEEM,projectGroupPROMISE,mlAlg));
+		executor.execute(new BatchRunner(projectGroupAEEEM,projectGroupNASA,mlAlg));
+		executor.execute(new BatchRunner(projectGroupAEEEM,projectGroupNASA2,mlAlg));
+		executor.execute(new BatchRunner(projectGroupAEEEM,projectGroupNASA3,mlAlg));
+		executor.execute(new BatchRunner(projectGroupAEEEM,projectGroupNASA4,mlAlg));
+		executor.execute(new BatchRunner(projectGroupAEEEM,projectGroupNASA5,mlAlg));
+		executor.execute(new BatchRunner(projectGroupAEEEM,projectGroupSOFTLAB,mlAlg));
 		
-		batchRunner(projectGroupRelink,projectGroupAEEEM);
-		batchRunner(projectGroupRelink,projectGroupPROMISE);
-		batchRunner(projectGroupRelink,projectGroupNASA);
-		batchRunner(projectGroupRelink,projectGroupNASA2);
-		batchRunner(projectGroupRelink,projectGroupNASA3);
-		batchRunner(projectGroupRelink,projectGroupNASA4);
-		batchRunner(projectGroupRelink,projectGroupNASA5);
-		batchRunner(projectGroupRelink,projectGroupSOFTLAB);
+		executor.execute(new BatchRunner(projectGroupRelink,projectGroupAEEEM,mlAlg));
+		executor.execute(new BatchRunner(projectGroupRelink,projectGroupPROMISE,mlAlg));
+		executor.execute(new BatchRunner(projectGroupRelink,projectGroupNASA,mlAlg));
+		executor.execute(new BatchRunner(projectGroupRelink,projectGroupNASA2,mlAlg));
+		executor.execute(new BatchRunner(projectGroupRelink,projectGroupNASA3,mlAlg));
+		executor.execute(new BatchRunner(projectGroupRelink,projectGroupNASA4,mlAlg));
+		executor.execute(new BatchRunner(projectGroupRelink,projectGroupNASA5,mlAlg));
+		executor.execute(new BatchRunner(projectGroupRelink,projectGroupSOFTLAB,mlAlg));
 		
-		batchRunner(projectGroupPROMISE,projectGroupAEEEM);
-		batchRunner(projectGroupPROMISE,projectGroupRelink);
-		batchRunner(projectGroupPROMISE,projectGroupNASA);
-		batchRunner(projectGroupPROMISE,projectGroupNASA2);
-		batchRunner(projectGroupPROMISE,projectGroupNASA3);
-		batchRunner(projectGroupPROMISE,projectGroupNASA4);
-		batchRunner(projectGroupPROMISE,projectGroupNASA5);
-		batchRunner(projectGroupPROMISE,projectGroupSOFTLAB);
+		executor.execute(new BatchRunner(projectGroupPROMISE,projectGroupAEEEM,mlAlg));
+		executor.execute(new BatchRunner(projectGroupPROMISE,projectGroupRelink,mlAlg));
+		executor.execute(new BatchRunner(projectGroupPROMISE,projectGroupNASA,mlAlg));
+		executor.execute(new BatchRunner(projectGroupPROMISE,projectGroupNASA2,mlAlg));
+		executor.execute(new BatchRunner(projectGroupPROMISE,projectGroupNASA3,mlAlg));
+		executor.execute(new BatchRunner(projectGroupPROMISE,projectGroupNASA4,mlAlg));
+		executor.execute(new BatchRunner(projectGroupPROMISE,projectGroupNASA5,mlAlg));
+		executor.execute(new BatchRunner(projectGroupPROMISE,projectGroupSOFTLAB,mlAlg));
 		
-		batchRunner(projectGroupNASA,projectGroupAEEEM);
-		batchRunner(projectGroupNASA,projectGroupRelink);
-		batchRunner(projectGroupNASA,projectGroupPROMISE);
-		batchRunner(projectGroupNASA,projectGroupSOFTLAB);
+		executor.execute(new BatchRunner(projectGroupNASA,projectGroupAEEEM,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA,projectGroupRelink,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA,projectGroupPROMISE,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA,projectGroupSOFTLAB,mlAlg));
 		
-		batchRunner(projectGroupNASA2,projectGroupAEEEM);
-		batchRunner(projectGroupNASA2,projectGroupRelink);
-		batchRunner(projectGroupNASA2,projectGroupPROMISE);
-		batchRunner(projectGroupNASA2,projectGroupSOFTLAB);
+		executor.execute(new BatchRunner(projectGroupNASA2,projectGroupAEEEM,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA2,projectGroupRelink,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA2,projectGroupPROMISE,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA2,projectGroupSOFTLAB,mlAlg));
 		
-		batchRunner(projectGroupNASA3,projectGroupAEEEM);
-		batchRunner(projectGroupNASA3,projectGroupRelink);
-		batchRunner(projectGroupNASA3,projectGroupPROMISE);
-		batchRunner(projectGroupNASA3,projectGroupSOFTLAB);
+		executor.execute(new BatchRunner(projectGroupNASA3,projectGroupAEEEM,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA3,projectGroupRelink,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA3,projectGroupPROMISE,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA3,projectGroupSOFTLAB,mlAlg));
 		
-		batchRunner(projectGroupNASA4,projectGroupAEEEM);
-		batchRunner(projectGroupNASA4,projectGroupRelink);
-		batchRunner(projectGroupNASA4,projectGroupPROMISE);
-		batchRunner(projectGroupNASA4,projectGroupSOFTLAB);
+		executor.execute(new BatchRunner(projectGroupNASA4,projectGroupAEEEM,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA4,projectGroupRelink,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA4,projectGroupPROMISE,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA4,projectGroupSOFTLAB,mlAlg));
 		
-		batchRunner(projectGroupNASA5,projectGroupAEEEM);
-		batchRunner(projectGroupNASA5,projectGroupRelink);
-		batchRunner(projectGroupNASA5,projectGroupPROMISE);
-		batchRunner(projectGroupNASA5,projectGroupSOFTLAB);
+		executor.execute(new BatchRunner(projectGroupNASA5,projectGroupAEEEM,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA5,projectGroupRelink,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA5,projectGroupPROMISE,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA5,projectGroupSOFTLAB,mlAlg));
 		
 		
-		batchRunner(projectGroupSOFTLAB,projectGroupAEEEM);
-		batchRunner(projectGroupSOFTLAB,projectGroupRelink);
-		batchRunner(projectGroupSOFTLAB,projectGroupPROMISE);
-		batchRunner(projectGroupSOFTLAB,projectGroupNASA);
-		batchRunner(projectGroupSOFTLAB,projectGroupNASA2);
-		batchRunner(projectGroupSOFTLAB,projectGroupNASA3);
-		batchRunner(projectGroupSOFTLAB,projectGroupNASA4);
-		batchRunner(projectGroupSOFTLAB,projectGroupNASA5);
+		executor.execute(new BatchRunner(projectGroupSOFTLAB,projectGroupAEEEM,mlAlg));
+		executor.execute(new BatchRunner(projectGroupSOFTLAB,projectGroupRelink,mlAlg));
+		executor.execute(new BatchRunner(projectGroupSOFTLAB,projectGroupPROMISE,mlAlg));
+		executor.execute(new BatchRunner(projectGroupSOFTLAB,projectGroupNASA,mlAlg));
+		executor.execute(new BatchRunner(projectGroupSOFTLAB,projectGroupNASA2,mlAlg));
+		executor.execute(new BatchRunner(projectGroupSOFTLAB,projectGroupNASA3,mlAlg));
+		executor.execute(new BatchRunner(projectGroupSOFTLAB,projectGroupNASA4,mlAlg));
+		executor.execute(new BatchRunner(projectGroupSOFTLAB,projectGroupNASA5,mlAlg));
 		
-		batchRunner(projectGroupNASA,projectGroupNASA2);
-		batchRunner(projectGroupNASA,projectGroupNASA3);
-		batchRunner(projectGroupNASA,projectGroupNASA4);
-		batchRunner(projectGroupNASA,projectGroupNASA5);
+		executor.execute(new BatchRunner(projectGroupNASA,projectGroupNASA2,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA,projectGroupNASA3,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA,projectGroupNASA4,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA,projectGroupNASA5,mlAlg));
 		
-		batchRunner(projectGroupNASA2,projectGroupNASA);
-		batchRunner(projectGroupNASA2,projectGroupNASA3);
-		batchRunner(projectGroupNASA2,projectGroupNASA4);
-		batchRunner(projectGroupNASA2,projectGroupNASA5);
+		executor.execute(new BatchRunner(projectGroupNASA2,projectGroupNASA,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA2,projectGroupNASA3,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA2,projectGroupNASA4,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA2,projectGroupNASA5,mlAlg));
 		
-		batchRunner(projectGroupNASA3,projectGroupNASA);
-		batchRunner(projectGroupNASA3,projectGroupNASA2);
-		batchRunner(projectGroupNASA3,projectGroupNASA4);
-		batchRunner(projectGroupNASA3,projectGroupNASA5);
+		executor.execute(new BatchRunner(projectGroupNASA3,projectGroupNASA,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA3,projectGroupNASA2,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA3,projectGroupNASA4,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA3,projectGroupNASA5,mlAlg));
 		
-		batchRunner(projectGroupNASA4,projectGroupNASA);
-		batchRunner(projectGroupNASA4,projectGroupNASA2);
-		batchRunner(projectGroupNASA4,projectGroupNASA3);
-		batchRunner(projectGroupNASA4,projectGroupNASA5);
+		executor.execute(new BatchRunner(projectGroupNASA4,projectGroupNASA,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA4,projectGroupNASA2,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA4,projectGroupNASA3,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA4,projectGroupNASA5,mlAlg));
 		
-		batchRunner(projectGroupNASA5,projectGroupNASA);
-		batchRunner(projectGroupNASA5,projectGroupNASA2);
-		batchRunner(projectGroupNASA5,projectGroupNASA3);
-		batchRunner(projectGroupNASA5,projectGroupNASA4);
+		executor.execute(new BatchRunner(projectGroupNASA5,projectGroupNASA,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA5,projectGroupNASA2,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA5,projectGroupNASA3,mlAlg));
+		executor.execute(new BatchRunner(projectGroupNASA5,projectGroupNASA4,mlAlg));
 		
+		executor.shutdown();
+		
+		while (!executor.isTerminated()) {
+			// waiting
+        }
+	}
+}
+
+class BatchRunner implements Runnable{
+	
+	ProjectGroupInfo sourceGroup;
+	ProjectGroupInfo targetGroup;
+	String mlAlg;
+	
+	public BatchRunner(ProjectGroupInfo srcGroup,ProjectGroupInfo tarGroup,String mlAlg){
+		sourceGroup = srcGroup;
+		targetGroup = tarGroup;
+		this.mlAlg = mlAlg;
 	}
 
+	@Override
+	public void run() {
+		batchRunner(sourceGroup,targetGroup);
+	}
+	
 	private void batchRunner(ProjectGroupInfo sourceGroup,ProjectGroupInfo targetGroup) {
 		
 		for(String source:sourceGroup.projects){
@@ -153,6 +183,7 @@ public class CrossPredictionWithIFSDatasets {
 			}
 		}
 	}
+	
 }
 
 class ProjectGroupInfo{
