@@ -216,16 +216,14 @@ class BatchRunner implements Runnable{
 					printOut(results);
 					
 				}else{
-					for(String line:existingIFSPreidctions.get(predictionInfo)){
-						System.out.println(line);
-					}
+					printOut(existingIFSPreidctions.get(predictionInfo));
 				}
 
 			}
 		}
 	}
 	
-	synchronized void printOut(ArrayList<String> lines){
+	static synchronized void printOut(ArrayList<String> lines){
 		for(String line:lines){
 			System.out.println(line);
 		}
