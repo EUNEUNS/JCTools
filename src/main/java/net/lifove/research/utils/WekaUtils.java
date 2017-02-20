@@ -1364,11 +1364,13 @@ public class WekaUtils {
 	 * @param repeat
 	 * @param folds
 	 * @param verbose
+	 * @param mlAlg
 	 */
-	public static void crossPredictionOnTheSameSplit(String predictionInfo,Instances sourceInstances,
+	public static ArrayList<String> crossPredictionOnTheSameSplit(String predictionInfo,Instances sourceInstances,
 			Instances targetInstances,String posLabel,int repeat,int folds, boolean verbose,String mlAlg) {
 
 		String mlAlgorithm = mlAlg.isEmpty()?"weka.classifiers.functions.Logistic":mlAlg;
+		ArrayList<String> results = new ArrayList<String>();
 
 		try {
 			Classifier classifierForCross = (Classifier) Utils.forName(Classifier.class, mlAlgorithm, null);
@@ -1419,29 +1421,35 @@ public class WekaUtils {
 					cMeasures.getAUCs().add(crossEval.areaUnderROC(posClassIndex));
 					cMeasures.getMCCs().add(crossEval.matthewsCorrelationCoefficient(posClassIndex));
 					cMeasures.getAUPRCs().add(crossEval.areaUnderPRC(posClassIndex));
-
-					if(verbose)
-						System.out.println("D," + predictionInfo + "," +	 
-								sourceInstances.numInstances() + "," + pcntNewInstances + "%," + 
-								targetInstances.numInstances() + "," + 
-								tarEval.fMeasure(posClassIndex) + "," + crossEval.fMeasure(posClassIndex) + ",-," +
-								tarEval.areaUnderROC(posClassIndex) + "," + crossEval.areaUnderROC(posClassIndex) + ",-," +
-								tarEval.matthewsCorrelationCoefficient(posClassIndex) + "," + crossEval.matthewsCorrelationCoefficient(posClassIndex) + ",-," +
-								tarEval.areaUnderPRC(posClassIndex) + "," + crossEval.areaUnderPRC(posClassIndex) + ",-");
+					String result = "D," + predictionInfo + "," +	 
+							sourceInstances.numInstances() + "," + pcntNewInstances + "%," + 
+							targetInstances.numInstances() + "," + 
+							tarEval.fMeasure(posClassIndex) + "," + crossEval.fMeasure(posClassIndex) + ",-," +
+							tarEval.areaUnderROC(posClassIndex) + "," + crossEval.areaUnderROC(posClassIndex) + ",-," +
+							tarEval.matthewsCorrelationCoefficient(posClassIndex) + "," + crossEval.matthewsCorrelationCoefficient(posClassIndex) + ",-," +
+							tarEval.areaUnderPRC(posClassIndex) + "," + crossEval.areaUnderPRC(posClassIndex) + ",-";
+					if(verbose)	
+						System.out.println(result);
+					
+					results.add(result);
 				}
 			}
-
-			System.out.println("A," + predictionInfo + "," +
-
-											sourceInstances.numInstances() + "," + pcntNewInstances + "%," + 
-											targetInstances.numInstances() + "," + 
-											getWinTieLoss(wMeasures.getFmeasures(),cMeasures.getFmeasures()) + "," +
-											getWinTieLoss(wMeasures.getAUCs(),cMeasures.getAUCs()) + "," +
-											getWinTieLoss(wMeasures.getMCCs(),cMeasures.getMCCs()) + "," +
-											getWinTieLoss(wMeasures.getAUPRCs(),cMeasures.getAUPRCs()));
+			String aggregatedResult = "A," + predictionInfo + "," +
+					sourceInstances.numInstances() + "," + pcntNewInstances + "%," + 
+					targetInstances.numInstances() + "," + 
+					getWinTieLoss(wMeasures.getFmeasures(),cMeasures.getFmeasures()) + "," +
+					getWinTieLoss(wMeasures.getAUCs(),cMeasures.getAUCs()) + "," +
+					getWinTieLoss(wMeasures.getMCCs(),cMeasures.getMCCs()) + "," +
+					getWinTieLoss(wMeasures.getAUPRCs(),cMeasures.getAUPRCs());
+			if(verbose)		
+				System.out.println(aggregatedResult);
+			results.add(aggregatedResult);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return results;
 	}
 
 	/**
@@ -1459,6 +1467,23 @@ public class WekaUtils {
 		crossPredictionOnTheSameSplit(predictionInfo,sourceInstances,
 				targetInstances,posLabel,repeat,folds,true,mlAlg);
 
+	}
+	
+	/**
+	 * conduct simple cross prediction on the same split of n-fold cross validation of target within-prediction
+	 * @param predictionInfo
+	 * @param sourceInstances
+	 * @param targetInstances
+	 * @param posLabel
+	 * @param repeat
+	 * @param folds
+	 * @param verbose
+	 */
+	public static ArrayList<String> crossPredictionOnTheSameSplit(String predictionInfo,Instances sourceInstances,
+			Instances targetInstances,String posLabel,int repeat,int folds, String mlAlg, boolean verbose) {
+
+		return crossPredictionOnTheSameSplit(predictionInfo,sourceInstances,
+				targetInstances,posLabel,repeat,folds,verbose,mlAlg);
 	}
 
 	/**

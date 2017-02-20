@@ -210,8 +210,11 @@ class BatchRunner implements Runnable{
 					Instances sourceInstances = WekaUtils.loadArff(sourcePath, classAttributeName);
 					Instances targetInstances = WekaUtils.loadArff(targetPath, classAttributeName);
 					
-					WekaUtils.crossPredictionOnTheSameSplit(predictionInfo,
-							sourceInstances, targetInstances, posLabel, repeat, folds,mlAlg);
+					ArrayList<String> results = WekaUtils.crossPredictionOnTheSameSplit(predictionInfo,
+							sourceInstances, targetInstances, posLabel, repeat, folds,mlAlg,false);
+					
+					printOut(results);
+					
 				}else{
 					for(String line:existingIFSPreidctions.get(predictionInfo)){
 						System.out.println(line);
@@ -219,6 +222,12 @@ class BatchRunner implements Runnable{
 				}
 
 			}
+		}
+	}
+	
+	synchronized void printOut(ArrayList<String> lines){
+		for(String line:lines){
+			System.out.println(line);
 		}
 	}
 }
